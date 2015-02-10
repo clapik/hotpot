@@ -1,6 +1,12 @@
 {% extends "home/layout.html" %}
-{% block title %} Login Page {% endblock %}
+{% block title %}
+Login
+{% endblock %}
 {% block body %}
+
+{% assets "login_js" %}
+<script type="text/javascript" src="{{ASSET_URL}}"></script>
+{% endassets %}
 {{super()}}
-<h2>Child Template - Login</h2>
+<h3>Login</h3>
 {% endblock %}

@@ -1,6 +1,7 @@
 __author__ = 'toanngo'
 from flask import Flask, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.assets import Environment
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -22,8 +23,14 @@ from .models import *
 from .views.profile import profile
 from .api.user_api import api
 
-# app.register_blueprint(profile, url_prefix='/<user_url>')
 app.register_blueprint(api, url_prefix='/api')
+
+
+# Register static assets
+from .util.assets import bundles
+
+assets = Environment(app)
+assets.register(bundles)
 
 
 @app.route('/')
