@@ -1,0 +1,5 @@
+{# hotpot_app/templates/profile/postings.html #}
+{% extends "profile/layout.html" %}
+{% for posting in g.profile_owner.postings.all() %}
+<li>Description: {{posting.description}}</li>
+{% endfor %}
