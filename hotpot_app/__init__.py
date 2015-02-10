@@ -17,5 +17,7 @@ app.config.from_envvar('APP_CONFIG')
 # Register db
 db = SQLAlchemy(app)
 
+from .models import *
+
 if __name__ == '__main__':
     app.run()
