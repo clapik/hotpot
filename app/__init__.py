@@ -22,11 +22,11 @@ from .models import *
 
 # Register Blueprints
 from .views.profile import profile
-from .api.user_api import api
-from .views.home import home
+from .api.user_api import user_api
+from .api.auth_api import auth_api
 
-app.register_blueprint(api, url_prefix='/api')
-app.register_blueprint(home)
+app.register_blueprint(user_api, url_prefix='/api/user')
+app.register_blueprint(auth_api, url_prefix='/api/auth')
 
 # Register static assets
 from .util.assets import bundles
@@ -41,6 +41,7 @@ bootstrap = Bootstrap(app)
 @app.route('/')
 def blank():
     return render_template('layout.html')
+
 
 if __name__ == '__main__':
     app.run()
