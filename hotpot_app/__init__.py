@@ -2,6 +2,7 @@ __author__ = 'toanngo'
 from flask import Flask, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -22,10 +23,10 @@ from .models import *
 # Register Blueprints
 from .views.profile import profile
 from .api.user_api import api
-from .views.home import login
+from .views.home import home
 
 app.register_blueprint(api, url_prefix='/api')
-app.register_blueprint(login)
+app.register_blueprint(home)
 
 # Register static assets
 from .util.assets import bundles
@@ -33,11 +34,13 @@ from .util.assets import bundles
 assets = Environment(app)
 assets.register(bundles)
 
+# Register Boostrap
+bootstrap = Bootstrap(app)
+
 
 @app.route('/')
 def blank():
     return render_template('layout.html')
-
 
 if __name__ == '__main__':
     app.run()

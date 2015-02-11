@@ -2,19 +2,16 @@
 {% block title %}
 Login Page
 {% endblock %}
+
 {% block body %}
-<form action="/login" method="POST">
-    <label>
-        Email:
-        <input type="text" name="email"/>
-    </label>
-    <label>
-        Password:
-        <input type="password" name="password"/>
-        {{form.csrf_token}}
-    </label>
-    <input type="submit" value="Login"/>
+{{super()}}
+<form action="{{url_for('home.login')}}" method="POST">
+    {{form.email.label}}{{form.email()}}
+    {{form.password.label}}{{form.password()}}
+    {{form.submit()}}
+    {{form.csrf_token()}}
 </form>
+
 {% assets "login_js" %}
 <script type="text/javascript" src="{{ASSET_URL}}"></script>
 {% endassets %}
