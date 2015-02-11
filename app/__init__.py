@@ -1,5 +1,5 @@
 __author__ = 'toanngo'
-from flask import Flask, render_template
+from flask import Flask, session
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment
 from flask_bootstrap import Bootstrap
@@ -37,6 +37,8 @@ assets.register(bundles)
 
 # Register Boostrap
 bootstrap = Bootstrap(app)
+
+app.secret_key = app.config['SECRET_KEY']
 
 if __name__ == '__main__':
     app.run()
