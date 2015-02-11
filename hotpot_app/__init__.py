@@ -22,9 +22,10 @@ from .models import *
 # Register Blueprints
 from .views.profile import profile
 from .api.user_api import api
+from .views.home import login
 
 app.register_blueprint(api, url_prefix='/api')
-
+app.register_blueprint(login)
 
 # Register static assets
 from .util.assets import bundles
@@ -35,7 +36,7 @@ assets.register(bundles)
 
 @app.route('/')
 def blank():
-    return render_template('home/login.html')
+    return render_template('layout.html')
 
 
 if __name__ == '__main__':
