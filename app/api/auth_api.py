@@ -1,32 +1,40 @@
 __author__ = 'toanngo'
-from flask.ext.httpauth import HTTPBasicAuth
 from ..models import Users
-from flask import g, Blueprint, jsonify
+from flask import g, Blueprint, make_response, render_template, redirect, url_for
 from .. import app
 
 auth_api = Blueprint('auth', __name__, url_prefix='/api/auth')
-auth = HTTPBasicAuth()
 
 
-@auth.verify_password
-def verify_password(username_or_token, password):
-    # first authenticate token
-    user = Users.verify_auth_token(app, username_or_token)
-    if not user:
-        # try to authenticate username n password
-        user = Users.query.filter_by(username=username_or_token).first()
-        if not user or not user.verify_password(password):
-            return False
-        g.user = user
-        return True
+# @auth_api.route('/verify_password')
+def verify_password(email, password):
+    print('verify email/password:', email, password)
+    # try to authenticate username and password
+    user = Users.query.filter_by(email=email).first()
+    if not user or not user.verify_password(password):
+        return False
+    g.user = user
+    return True
 
 
 @auth_api.route('/token')
-@auth.login_required
 def get_auth_token():
     """
     get auth token
     :return: token
     """
+    print('Get auth token')
     token = g.user.generate_auth_token(app)
-    return jsonify({'token': token.decode('ascii'), 'duration': 600})
+    res = make_response(redirect(url_for('home.home_page')))
+    res.set_cookie('token', token, expires=600)
+    return res
+
+
+def verify_token(token):
+    print('verify token:', token)
+    # first authenticate token
+    user = Users.verify_auth_token(app, token)
+    if not user:
+        return False
+    g.user = user
+    return True

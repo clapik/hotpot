@@ -1,7 +1,7 @@
 from . import db
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired, BadSignature
+from passlib.apps import custom_app_context as pwd_context
 
 
 class Users(UserMixin, db.Model):
@@ -14,19 +14,20 @@ class Users(UserMixin, db.Model):
 
     def __init__(self, username, password, email):
         self.username = username
-        self.password = generate_password_hash(password)
+        self.password = pwd_context.encrypt(password)
         self.email = email
         self.activated = False
 
     def verify_password(self, password):
-        return check_password_hash(self.password, password)
+        return pwd_context.verify(password, self.password)
 
-    def generate_auth(self, app, expiration=6000):
-        s = Serializer(app.config['SECRET_KEY'], exprires_in=expiration)
+    def generate_auth_token(self, app, expiration=600):
+        s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
         return s.dumps({'id': self.id})
 
     @staticmethod
     def verify_auth_token(app, token):
+        print("token:", token)
         s = Serializer(app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
@@ -34,7 +35,8 @@ class Users(UserMixin, db.Model):
             return None
         except BadSignature:
             return None
-        user = Users.query.get[data['id']]
+        print(data)
+        user = Users.query.get(data['id'])
         return user
 
 
