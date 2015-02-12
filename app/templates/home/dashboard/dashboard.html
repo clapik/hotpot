@@ -37,8 +37,9 @@
             </div>
             <div ng-controller="postings-controller" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <div class="row"><span class="label label-default"
-                               style="font-size:large">Available postings here for user {{ username }}</span></div>
-                <div class="container-fluid row">
+                                       style="font-size:large">Available postings here for user {{ username }}</span>
+                </div>
+                <div class="container-fluid row" style="padding-top:2%">
                     <ul>
                         <li ng-repeat="posting in postings.result">
                             <span>Description: [[posting.description]]</span>
