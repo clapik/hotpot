@@ -1,5 +1,5 @@
 __author__ = 'toanngo'
-from flask import Flask, session
+from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment
 from flask_bootstrap import Bootstrap

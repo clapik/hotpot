@@ -14,16 +14,14 @@ def home():
 
 
 @user_api.route('/register', methods=['POST'])
-@user_api.errorhandler(400)
 def register_user():
     """
-    Register a User
+    Rest endpoint to register user
     :return: username if success
     """
     username = request.json['username']
     password = request.json['password']
     email = request.json['email']
-    # TODO refactor this
     if username is None or password is None or email is None:
         abort(400)
     user = register_new_user(username, email, password)
@@ -33,6 +31,13 @@ def register_user():
 
 
 def register_new_user(username, email, password):
+    """
+    Register a new user if not exist
+    :param username: username
+    :param email: email
+    :param password: password
+    :return: new user if exists
+    """
     if Users.query.filter_by(username=username).first() is not None:
         return None
     if Users.query.filter_by(email=email).first() is not None:
@@ -43,13 +48,14 @@ def register_new_user(username, email, password):
     return user
 
 
-@user_api.errorhandler(400)
-def invalid_input(error):
-    return make_response(jsonify({'error': 'Invalid Input'}), 400)
+@user_api.route('/delete')
+def delete_user():
+    # TODO
+    pass
 
 
-@user_api.errorhandler(400)
-def not_found(error):
-    return make_response(jsonify({'error': 'Not Found'}), 400)
+def delete_user_helper():
+    # TODO
+    pass
 
 

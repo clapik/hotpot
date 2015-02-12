@@ -1,0 +1,42 @@
+{% extends "home/home_page.html" %}
+{% block head %}
+{% assets "dashboard_css" %}
+<link rel="stylesheet" href="{{ASSET_URL}}"/>
+{% endassets %}
+{% assets "dashboard_js" %}
+<script type="text/javascript" src="{{ASSET_URL}}"></script>
+{% endassets %}
+{% endblock %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <form class="navbar-form navbar-right" method="POST" action="{{url_for('home.logout')}}">
+                                <button type="submit" class="btn btn-primary">New Posting</button>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form class="navbar-form navbar-right" method="POST" action="{{url_for('home.logout')}}">
+                                <button type="submit" class="btn btn-primary">New Appointment</button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="#">What's near you?<span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Your Postings</a></li>
+                <li><a href="#">Your Appointments</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-app="hotpot-dashboard">
+            put postings here
+        </div>
+    </div>
+</div>
+
+{% endblock %}

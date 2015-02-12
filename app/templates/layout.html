@@ -5,6 +5,12 @@
     <!--boostrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.css">
+    <!--jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+    <!--angular-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.js"></script>
+    <!--boostrap-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.js"></script>
     {% block head %}{% endblock %}
 </head>
 <body>
@@ -34,12 +40,10 @@
     {% endfor %}
 </div>
 {% block body %}
+
+
 {% endblock %}
-<!--jquery-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-<!--angular-->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.js"></script>
-<!--boostrap-->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.js"></script>
+{% block body_js %}
+{% endblock %}
 </body>
 </html>

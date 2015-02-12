@@ -40,8 +40,13 @@ class Posting(db.Model):
     __tablename__ = 'posting'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     description = db.Column(db.String(100), nullable=False)
+    # TODO add more fields
     # foreign key
     cook_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    def __init__(self, description, cook_id):
+        self.description = description
+        self.cook_id = cook_id
 
 
 class Appointment(db.Model):

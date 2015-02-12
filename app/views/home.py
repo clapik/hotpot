@@ -51,6 +51,6 @@ def register():
 @login_required
 def dashboard(username):
     if username == g.user.username:
-        return render_template('home/dashboard.html')
+        return render_template('home/dashboard/dashboard.html')
     else:
         abort(403)
