@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, redirect, flash, session
+from flask import Blueprint, render_template, request, url_for, redirect, flash, session, g, abort
 from ..api.auth_api import verify_token, verify_password, get_auth_token, login_required
 from ..api.user_api import register_new_user
 from ..forms import LoginForm, RegisterForm
@@ -9,7 +9,7 @@ home = Blueprint('home', __name__)
 @home.route('/')
 @login_required
 def home_page():
-    return render_template('home/home_page.html')
+    return redirect(url_for('home.home_page') + g.user.username)
 
 
 @home.route('/login', methods=['POST', 'GET'])
@@ -50,4 +50,7 @@ def register():
 @home.route('/<username>')
 @login_required
 def dashboard(username):
-    return render_template('home/dashboard.html')
+    if username == g.user.username:
+        return render_template('home/dashboard.html')
+    else:
+        abort(403)
