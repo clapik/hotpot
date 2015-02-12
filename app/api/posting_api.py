@@ -1,5 +1,5 @@
 __author__ = 'toanngo'
-from flask import Blueprint, g, abort, jsonify
+from flask import Blueprint, g, abort, jsonify, request
 from ..models import Posting, Users
 from .. import db
 from .auth_api import login_required
@@ -25,11 +25,17 @@ def create_posting_helper(description):
 @login_required
 def get_postings():
     # default to query all
-    postings = get_postings_helper()
+    r = request
+    if request.method == 'GET':
+        query = 'all'
+    else:
+        query = {'username': request.json['username']}
+    postings = get_postings_helper(query)
     if not postings or len(postings) == 0:
         abort(500)
     result = jsonify_postings(postings)
     return jsonify(result), 201
+
     # TODO add option to query specific
 
 
@@ -38,7 +44,11 @@ def get_postings_helper(query='all'):
         postings = Posting.query.join(Users).add_columns(Users.username).all()
         return postings
     else:
-        return None
+        result = Posting.query.join(Users).add_columns(Users.username)
+        for key in query:
+            if key == 'username':
+                result = result.filter_by(username=query.get('username'))
+        return result.all()
 
 
 def jsonify_postings(postings):

@@ -8,6 +8,7 @@
     {% endassets %}
 {% endblock %}
 {% block body %}
+    <script> var username = "{{ username }}";</script>
     <div class="container-fluid" ng-app="hotpot-dashboard">
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
@@ -20,36 +21,16 @@
                                     <button type="submit" class="btn btn-primary">New Posting</button>
                                 </form>
                             </div>
-                            <div class="col-md-6">
-                                <form class="navbar-form navbar-right" method="POST"
-                                      action="{{ url_for('home.logout') }}">
-                                    <button type="submit" class="btn btn-primary">New Appointment</button>
-                                </form>
-                            </div>
                         </div>
                     </li>
                 </ul>
-                <ul class="nav nav-sidebar">
-                    <li class="active"><a href="#">What's near you?<span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Your Postings</a></li>
-                    <li><a href="#">Your Appointments</a></li>
+                <ul class="nav nav-sidebar" ng-controller="nav-sidebar_controller">
+                    <li ng-repeat="item in items" ng-class="{'active': $index==selectedIndex}">
+                        <a href="[[item.url]]" ng-click="active_function($index)">[[item.name]]</a>
+                    </li>
                 </ul>
             </div>
-            <div ng-controller="postings-controller" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <div class="row"><span class="label label-default"
-                                       style="font-size:large">Available postings here for user {{ username }}</span>
-                </div>
-                <div class="container-fluid row" style="padding-top:2%">
-                    <ul>
-                        <li ng-repeat="posting in postings.result">
-                            <span>Description: [[posting.description]]</span>
-
-                            <p>Posting ID: [[posting.id]]</p>
-
-                            <p>Cook Name: [[posting.cook_username]]</p>
-                        </li>
-                    </ul>
-                </div>
+            <div ng-view class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
             </div>
         </div>

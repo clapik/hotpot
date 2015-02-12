@@ -1,46 +1,32 @@
 /**
  * Created by toanngo on 2/12/15.
  */
-var app = angular.module('hotpot-dashboard', []);
+dashboard_controller = angular.module('dashboard_controller', [])
 
-app.config(['$interpolateProvider', function ($interpolateProvider) {
-    $interpolateProvider.startSymbol('[[');
-    $interpolateProvider.endSymbol(']]');
-}]);
-
-app.controller('postings-controller', function ($scope) {
-    $scope.postings = {
-        "result": [
-            {
-                "cook_id": 5,
-                "cook_username": "toanngo",
-                "description": "asdf",
-                "id": 1
-            },
-            {
-                "cook_id": 5,
-                "cook_username": "toanngo",
-                "description": "Traditional Vietnamese Dish",
-                "id": 2
-            },
-            {
-                "cook_id": 5,
-                "cook_username": "toanngo",
-                "description": "Traditional Vietnamese Dish 2",
-                "id": 3
-            },
-            {
-                "cook_id": 5,
-                "cook_username": "toanngo",
-                "description": "Traditional Vietnamese Dish 2",
-                "id": 4
-            },
-            {
-                "cook_id": 5,
-                "cook_username": "toanngo",
-                "description": "Traditional Vietnamese Dish 3",
-                "id": 5
-            }
-        ]
+dashboard_controller.controller('get_postings_controller', ['$scope', 'Postings',
+    function ($scope, Postings) {
+        $scope.postings = Postings.get();
     }
-})
+]);
+
+dashboard_controller.controller('get_my_postings_controller', ['$scope', 'Postings',
+    function ($scope, Postings) {
+        $scope.postings = Postings.save({username: window.username}, function(data){
+
+        });
+    }
+]);
+
+dashboard_controller.controller('nav-sidebar_controller', ['$scope',
+    function ($scope) {
+        $scope.items = [
+            {name: "What's near you", url: "/"},
+            {name: "Your Postings", url: "#/my_postings"},
+            {name: "Your Appointments", url: "#/my_appointments"}
+        ];
+        $scope.selectedIndex = 0
+        $scope.active_function = function ($index) {
+            $scope.selectedIndex = $index
+        };
+    }
+]);

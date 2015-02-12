@@ -1,0 +1,14 @@
+<div class="row"><span class="label label-default"
+                       style="font-size:large">Available postings:</span>
+</div>
+<div class="container-fluid row" style="padding-top:2%">
+    <ul>
+        <li ng-repeat="posting in postings.result">
+            <span>Description: [[posting.description]]</span>
+
+            <p>Posting ID: [[posting.id]]</p>
+
+            <p>Cook Name: [[posting.cook_username]]</p>
+        </li>
+    </ul>
+</div>

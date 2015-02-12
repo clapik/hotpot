@@ -8,6 +8,13 @@ class PostingApiTest(unittest.TestCase):
         postings = get_postings_helper()
         self.assertTrue(len(postings) > 1)
 
+    def test_get_postings_helper_with_query(self):
+        postings = get_postings_helper(query={'username': 'toanngo2'})
+        self.assertTrue(len(postings) > 1)
+        postings = jsonify_postings(postings).get('result')
+        for posting in postings:
+            self.assertTrue(posting.get('cook_username') == 'toanngo2')
+
     def test_jsonify_postings(self):
         postings = get_postings_helper()
         result = jsonify_postings(postings)
