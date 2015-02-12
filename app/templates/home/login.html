@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}
-HotPot - Login Page
+HotPot! - Login
 {% endblock %}
 
 {% block head %}
@@ -26,9 +26,6 @@ HotPot - Login Page
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <a href="{{url_for('home.register')}}">Not a user? Register!</a>
-        <!--{{form.email()}}-->
-        <!--{{form.password.label}}{{form.password()}}-->
-        <!--{{form.submit()}}-->
         {{form.csrf_token()}}
     </form>
 </div>

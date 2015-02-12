@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}
+    HotPot! - Create Posting
+{% endblock %}
+
+{% block head %}
+    {% assets "login_css" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}"/>
+    {% endassets %}
+{% endblock %}
+{% block body %}
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form class="form-signin" action="{{ url_for('home.home_page')+username+'/create_posting' }}" method="POST">
+            <h2 class="page-header">Create Posting</h2>
+            <label for="inputDescription" class="sr-only">Description</label>
+            {{ form.description(type='text', id='inputDescription', class='form-control', placeholder='Description',
+        required='', autofocus='') }}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Create!</button>
+            {{ form.csrf_token() }}
+        </form>
+    </div>
+    <div class="col-md-4"></div>
+    {% assets "login_js" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+{% endblock %}

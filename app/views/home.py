@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template, request, url_for, redirect, flash, session, g, abort
-from ..api.auth_api import verify_token, verify_password, get_auth_token, login_required
+from flask import Blueprint, render_template, request, url_for, redirect, flash, session, g, abort, send_from_directory
+from ..api.auth_api import verify_token, verify_password, get_auth_token, login_required, user_required
 from ..api.user_api import register_new_user
-from ..forms import LoginForm, RegisterForm
+from ..api.posting_api import create_posting_helper
+from ..forms import LoginForm, RegisterForm, NewPostingForm
+import os
 
 home = Blueprint('home', __name__)
 
@@ -49,8 +51,27 @@ def register():
 
 @home.route('/<username>')
 @login_required
+@user_required
 def dashboard(username):
-    if username == g.user.username:
-        return render_template('home/dashboard/dashboard.html')
-    else:
-        abort(403)
+    return render_template('home/dashboard/dashboard.html', username=username)
+
+
+@home.route('/<username>/create_posting', methods=['POST', 'GET'])
+@login_required
+@user_required
+def create_posting(username):
+    form = NewPostingForm()
+    if form.validate_on_submit():
+        posting = create_posting_helper(form.description.data)
+        flash('Posting created! Unique posting id: ' + str(posting.id))
+        return redirect(url_for('home.home_page'))
+    return render_template('home/create_posting.html', form=form, username=username)
+
+
+@home.route('/favicon.ico')
+def favicon():
+    """
+    serve favicon.ico
+    :return: serve favicon.ico
+    """
+    return send_from_directory(os.path.join(home.root_path, 'static'), 'favicon.ico')

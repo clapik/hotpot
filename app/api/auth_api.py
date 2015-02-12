@@ -1,6 +1,6 @@
 __author__ = 'toanngo'
 from ..models import Users
-from flask import g, Blueprint, make_response, redirect, url_for, request, session
+from flask import g, Blueprint, make_response, redirect, url_for, request, session, abort
 from .. import app
 from functools import wraps
 
@@ -53,9 +53,9 @@ def verify_token(token):
 
 def login_required(f):
     """
-    wrapper function to force login
-    :param f:
-    :return:
+    wrapper function to enforce login
+    :param f: function being wrapped
+    :return: check token's validity
     """
 
     @wraps(f)
@@ -67,5 +67,26 @@ def login_required(f):
         else:
             return redirect(url_for('home.login', next=request.url))
         return f(*args, **kwargs)
+
+    return decorated_function
+
+
+def user_required(f):
+    """
+    wrapper function to enforce the right username
+    :param f: function being wrapped, with parameter 'username' passed in
+    :return: check username against token
+    """
+
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'username' in kwargs:
+            username = kwargs.get('username')
+            if username == g.user.username:
+                return f(*args, **kwargs)
+            else:
+                abort(403)
+        else:
+            abort(403)
 
     return decorated_function

@@ -17,3 +17,8 @@ class LoginForm(EmailPasswordForm):
 
 class RegisterForm(EmailPasswordForm):
     username = StringField('Email', validators=[DataRequired(), Length(1, 64)])
+
+
+class NewPostingForm(Form):
+    description = StringField('Description', validators=[DataRequired(), Length(1, 255)])
+    submit = SubmitField()
