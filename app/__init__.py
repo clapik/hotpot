@@ -3,6 +3,7 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment
 from flask_bootstrap import Bootstrap
+from flask_cache import Cache
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -19,6 +20,9 @@ app.config.from_envvar('APP_CONFIG')
 db = SQLAlchemy(app)
 
 from .models import *
+
+# Allow caching
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 # Register Blueprints
 from .views.home import home
@@ -41,9 +45,6 @@ assets.register(bundles)
 bootstrap = Bootstrap(app)
 
 app.secret_key = app.config['SECRET_KEY']
-
-
-
 
 if __name__ == '__main__':
     app.run()

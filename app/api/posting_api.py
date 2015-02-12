@@ -1,7 +1,7 @@
 __author__ = 'toanngo'
 from flask import Blueprint, g, abort, jsonify, request
 from ..models import Posting, Users
-from .. import db
+from .. import db, cache
 from .auth_api import login_required
 
 posting_api = Blueprint('posting_api', __name__)
@@ -25,7 +25,6 @@ def create_posting_helper(description):
 @login_required
 def get_postings():
     # default to query all
-    r = request
     if request.method == 'GET':
         query = 'all'
     else:
@@ -36,9 +35,8 @@ def get_postings():
     result = jsonify_postings(postings)
     return jsonify(result), 201
 
-    # TODO add option to query specific
 
-
+@cache.memoize(timeout=60)
 def get_postings_helper(query='all'):
     if query == 'all':
         postings = Posting.query.join(Users).add_columns(Users.username).all()
