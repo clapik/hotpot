@@ -10,11 +10,21 @@ posting_api = Blueprint('posting_api', __name__)
 @posting_api.route('/create', methods=['POST'])
 @login_required
 def create_posting():
+    """
+    Rest endpoint for creating a posting
+    :return:
+    """
     # TODO
     pass
 
 
 def create_posting_helper(description):
+    """
+    Create a posting for a particular user
+    Should not be called directly
+    :param description: posting description
+    :return: posting object if succesfully created
+    """
     posting = Posting(description, g.user.id)
     db.session.add(posting)
     db.session.commit()
@@ -24,6 +34,10 @@ def create_posting_helper(description):
 @posting_api.route('/get_postings', methods=['POST', 'GET'])
 @login_required
 def get_postings():
+    """
+    Get the postings
+    :return: json object: {'result':[postings]}
+    """
     # default to query all
     query = 'all' if request.method == 'GET' else {'username': request.json['username']}
     postings = get_postings_helper(query)
@@ -35,6 +49,11 @@ def get_postings():
 
 @cache.memoize(timeout=60)
 def get_postings_helper(query):
+    """
+    Query the postings from DB
+    :param query: query
+    :return: queried postings
+    """
     if query == 'all':
         postings = Posting.query.join(Users).add_columns(Users.username).all()
         return postings
@@ -47,6 +66,11 @@ def get_postings_helper(query):
 
 @cache.memoize(timeout=60)
 def jsonify_postings(postings):
+    """
+    Jsonify a list of postings
+    :param postings: postings
+    :return: postings as JSON
+    """
     result = []
     for posting in postings:
         result.append({

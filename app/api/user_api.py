@@ -7,7 +7,6 @@ user_api = Blueprint('user_api', __name__)
 
 
 @user_api.route('/', methods=['GET'])
-@user_api.errorhandler(400)
 def home():
     # TODO
     return 'USER API Home!'

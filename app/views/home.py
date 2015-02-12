@@ -11,11 +11,19 @@ home = Blueprint('home', __name__)
 @home.route('/')
 @login_required
 def home_page():
+    """
+    home page
+    :return: redirect to /username
+    """
     return redirect(url_for('home.home_page') + g.user.username)
 
 
 @home.route('/login', methods=['POST', 'GET'])
 def login():
+    """
+    User log in
+    :return: redirect to home page is success, log in page if not
+    """
     if 'token' in session:
         token = session['token']
         if token and verify_token(token):
@@ -33,12 +41,21 @@ def login():
 
 @home.route('/logout', methods=['POST'])
 def logout():
+    """
+    user log out
+    just remove the token
+    :return: redirect to home page
+    """
     session.pop('token', None)
     return redirect(url_for('home.home_page'))
 
 
 @home.route('/register', methods=['POST', 'GET'])
 def register():
+    """
+    Register a new user
+    :return: redirect to login page if success, register page if not
+    """
     form = RegisterForm()
     if form.validate_on_submit():
         user = register_new_user(username=form.username.data, password=form.password.data, email=form.email.data)
@@ -53,6 +70,11 @@ def register():
 @login_required
 @user_required
 def dashboard(username):
+    """
+    Render dashboard for a particular user
+    :param username: username
+    :return: render dashboard page
+    """
     return render_template('home/dashboard/dashboard.html', username=username)
 
 
@@ -60,6 +82,12 @@ def dashboard(username):
 @login_required
 @user_required
 def create_posting(username):
+    """
+    Create a posting
+    :param username: username
+    :return: if GET -> render the create posting page;
+    if POST -> create the posting then redirect to home page
+    """
     form = NewPostingForm()
     if form.validate_on_submit():
         posting = create_posting_helper(form.description.data)

@@ -27,11 +27,11 @@ def verify_password(email_or_username, password):
 def get_auth_token(remember_me=False):
     """
     get auth token IFF successfully logged in
-    token lasts for ~ 5 days if remember_me
-    else 1h
+    token lasts for 5 days = 432,000s if remember_me
+    else 1 h = 3600s
     :return: token
     """
-    expiration = 400000 if remember_me else 3600
+    expiration = 432000 if remember_me else 3600
     token = g.user.generate_auth_token(app, expiration=expiration)
     res = make_response(redirect(request.args.get('next') or url_for('home.home_page')))
     session['token'] = token

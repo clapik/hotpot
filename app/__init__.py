@@ -52,7 +52,7 @@ app.secret_key = app.config['SECRET_KEY']
 def make_session_permanent():
     """
     Keep a session alive for 7 days (different from token)
-    :return:
+    :return: None
     """
     session.permanent = True
     app.permanent_session_lifetime = timedelta(days=7)
