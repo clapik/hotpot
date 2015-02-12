@@ -1,9 +1,10 @@
 __author__ = 'toanngo'
-from flask import Flask
+from flask import Flask, session
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment
 from flask_bootstrap import Bootstrap
 from flask_cache import Cache
+from datetime import timedelta
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -45,6 +46,17 @@ assets.register(bundles)
 bootstrap = Bootstrap(app)
 
 app.secret_key = app.config['SECRET_KEY']
+
+
+@app.before_request
+def make_session_permanent():
+    """
+    Keep a session alive for 7 days (different from token)
+    :return:
+    """
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(days=7)
+
 
 if __name__ == '__main__':
     app.run()

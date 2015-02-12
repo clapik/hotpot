@@ -37,7 +37,7 @@ def get_postings():
 
 
 @cache.memoize(timeout=60)
-def get_postings_helper(query='all'):
+def get_postings_helper(query):
     if query == 'all':
         postings = Posting.query.join(Users).add_columns(Users.username).all()
         return postings
@@ -49,6 +49,7 @@ def get_postings_helper(query='all'):
         return result.all()
 
 
+@cache.memoize(timeout=60)
 def jsonify_postings(postings):
     result = []
     for posting in postings:
