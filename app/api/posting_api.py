@@ -25,10 +25,7 @@ def create_posting_helper(description):
 @login_required
 def get_postings():
     # default to query all
-    if request.method == 'GET':
-        query = 'all'
-    else:
-        query = {'username': request.json['username']}
+    query = 'all' if request.method == 'GET' else {'username': request.json['username']}
     postings = get_postings_helper(query)
     if not postings or len(postings) == 0:
         abort(500)
@@ -41,12 +38,11 @@ def get_postings_helper(query):
     if query == 'all':
         postings = Posting.query.join(Users).add_columns(Users.username).all()
         return postings
-    else:
-        result = Posting.query.join(Users).add_columns(Users.username)
-        for key in query:
-            if key == 'username':
-                result = result.filter_by(username=query.get('username'))
-        return result.all()
+    result = Posting.query.join(Users).add_columns(Users.username)
+    for key in query:
+        if key == 'username':
+            result = result.filter_by(username=query.get('username'))
+    return result.all()
 
 
 @cache.memoize(timeout=60)

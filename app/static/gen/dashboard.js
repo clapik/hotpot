@@ -66,5 +66,8 @@ dashboard_controller.controller('nav-sidebar_controller', ['$scope',
 var postingsServices = angular.module('postingsServices', ['ngResource']);
 
 postingsServices.factory('Postings', ['$resource', function ($resource) {
-    return $resource("/api/posting/get_postings");
+    return $resource("/api/posting/get_postings", {}, {
+        get: {method: 'GET', cache: true},
+        save: {method: 'POST', cache: true}
+    });
 }]);
