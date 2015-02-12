@@ -27,15 +27,11 @@ class Users(UserMixin, db.Model):
 
     @staticmethod
     def verify_auth_token(app, token):
-        print("token:", token)
         s = Serializer(app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
-        except SignatureExpired:
+        except SignatureExpired or BadSignature:
             return None
-        except BadSignature:
-            return None
-        print(data)
         user = Users.query.get(data['id'])
         return user
 

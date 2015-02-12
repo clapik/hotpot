@@ -45,3 +45,9 @@ def register():
         flash('Username/Email exists')
         form = RegisterForm()
     return render_template('home/register.html', form=form)
+
+
+@home.route('/<username>')
+@login_required
+def dashboard(username):
+    return render_template('home/dashboard.html')
