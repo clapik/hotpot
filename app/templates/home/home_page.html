@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %} Home {% endblock %}
+{% block navbar_right %}
+<div id="navbar" class="navbar-collapse collapse">
+    <form class="navbar-form navbar-right" method="POST" action="{{url_for('home.logout')}}">
+        <button type="submit" class="btn btn-success">Sign out</button>
+    </form>
+</div>
+{% endblock %}
+{% block body %}
+Successfully logged in!
+{% endblock %}

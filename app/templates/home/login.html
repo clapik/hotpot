@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}
+HotPot - Login Page
+{% endblock %}
+
+{% block head %}
+{% assets "login_css" %}
+<link rel="stylesheet" href="{{ASSET_URL}}"/>
+{% endassets %}
+{% endblock %}
+{% block body %}
+<div class="col-md-4"></div>
+<div class="col-md-4">
+    <form class="form-signin" action="{{url_for('home.login')}}" method="POST">
+        <h2 class="page-header">Sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        {{form.email(type='text', id='inputEmail', class='form-control', placeholder='Username/Email Address',
+        required='', autofocus='')}}
+        <label for="inputPassword" class="sr-only">Password</label>
+        {{form.password(type='password', id='inputPassword', class='form-control', placeholder='Password',
+        required='')}}
+        <div class="checkbox">
+            <label>
+                {{form.remember_me(type='checkbox',value='remember-me')}} Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <a href="{{url_for('home.register')}}">Not a user? Register!</a>
+        <!--{{form.email()}}-->
+        <!--{{form.password.label}}{{form.password()}}-->
+        <!--{{form.submit()}}-->
+        {{form.csrf_token()}}
+    </form>
+</div>
+<div class="col-md-4"></div>
+{% assets "login_js" %}
+<script type="text/javascript" src="{{ASSET_URL}}"></script>
+{% endassets %}
+{% endblock %}

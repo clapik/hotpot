@@ -12,7 +12,7 @@ class Users(UserMixin, db.Model):
     email = db.Column(db.String(50), nullable=False)
     activated = db.Column(db.Boolean, nullable=False)
 
-    def __init__(self, username, password, email):
+    def __init__(self, username='', password='', email=''):
         self.username = username
         self.password = pwd_context.encrypt(password)
         self.email = email
