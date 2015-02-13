@@ -1,12 +1,34 @@
 <div class="row"><span class="label label-default"
                        style="font-size:large">Available postings:</span>
 </div>
-<div class="container-fluid row" style="padding-top:2%">
-    <ul>
-        <li ng-repeat="posting in postings.result">
-            <span>Description: [[posting.description]]</span>
-            <p>Posting ID: [[posting.id]]</p>
-            <p>Cook Name: [[posting.cook_username]]</p>
-        </li>
-    </ul>
+<div class="container row" style="padding-top:2%">
+    <div class="col-md-8">
+        <table id="postings-table"></table>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="row" ng-repeat="posting in postings.result">
+        <!-- Modal -->
+        <div class="modal fade" id="[['myModal' + $index]]" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">[[posting.description]]</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Posting ID: [[posting.id]]</p>
+
+
+                        <p>Cook Name: [[posting.cook_username]]</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Make Appointment!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
