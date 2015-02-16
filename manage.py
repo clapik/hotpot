@@ -8,6 +8,8 @@ manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)
 
+manager.add_command('app', app.run)
+
 """
 python manage.py
 db init         - initialize Alembic
