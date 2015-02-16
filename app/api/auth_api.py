@@ -15,10 +15,14 @@ def verify_password(email_or_username, password):
     :return: boolean
     """
     user = Users.query.filter_by(email=email_or_username).first()
-    if not user or not user.verify_password(password):
+    # no email found -> check for username
+    if not user:
         user = Users.query.filter_by(username=email_or_username).first()
         if not user:
             return False
+        else:
+            if not user.verify_password(password):
+                return False
     g.user = user
     return True
 
