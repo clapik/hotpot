@@ -12,6 +12,8 @@ manager.add_command('db', MigrateCommand)
 
 # manager.add_command('app', app.run)
 
+app.logger.info(app.config['SQLALCHEMY_DATABASE_URI'])
+
 """
 python manage.py
 db init         - initialize Alembic
