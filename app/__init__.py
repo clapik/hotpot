@@ -17,6 +17,7 @@ app.config.from_object('config.default')
 
 # Load file specified by APP_CONFIG
 app.config.from_envvar('APP_CONFIG')
+app.config.from_envvar('SECRET_KEY')
 
 # Register db
 db = SQLAlchemy(app)
