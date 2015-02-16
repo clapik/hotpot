@@ -8,8 +8,6 @@ manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)
 
-print(MigrateCommand.directory)
-
 # manager.add_command('app', app.run)
 
 app.logger.info(app.config['SQLALCHEMY_DATABASE_URI'])
