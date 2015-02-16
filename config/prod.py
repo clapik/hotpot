@@ -10,3 +10,5 @@ MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
 MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 MAIL_SUBJECT_PREFIX = '[HotPot]'
 MAIL_SENDER = 'HotPot Admin <toanngo-dev@gmail.com>'
+
+SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
