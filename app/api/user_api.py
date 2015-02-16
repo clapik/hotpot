@@ -1,6 +1,7 @@
 __author__ = 'toanngo'
 from flask import request, abort, jsonify, make_response, Blueprint
 from ..models import Users
+from .auth_api import login_required, user_required
 from .. import db
 
 user_api = Blueprint('user_api', __name__)
@@ -47,14 +48,39 @@ def register_new_user(username, email, password):
     return user
 
 
-@user_api.route('/delete')
-def delete_user():
+@user_api.route('/delete/<username>', methods=['POST'])
+@login_required
+def delete_user(username):
     # TODO
     pass
 
 
-def delete_user_helper():
+@user_required
+def delete_user_helper(username):
     # TODO
     pass
 
 
+@user_api.route('/edit', methods=['POST'])
+@login_required
+def edit_user():
+    # TODO
+    pass
+
+
+@user_required
+def edit_user_helper(username):
+    # TODO
+    pass
+
+
+@user_api.route('/find_user/{username}')
+@login_required
+def find_user(username):
+    # TODO
+    pass
+
+
+def find_user_helper(username):
+    # TODO
+    pass

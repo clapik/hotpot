@@ -1,6 +1,6 @@
 __author__ = 'toanngo'
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, DecimalField, DateField
 from wtforms.validators import Email, DataRequired, Length
 
 
@@ -21,4 +21,6 @@ class RegisterForm(EmailPasswordForm):
 
 class NewPostingForm(Form):
     description = StringField('Description', validators=[DataRequired(), Length(1, 255)])
+    price = DecimalField('Price')
+    date = DateField('Date', format='%m/%d/%Y')
     submit = SubmitField()

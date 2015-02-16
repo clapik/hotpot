@@ -1,36 +1,84 @@
 {% extends "layout.html" %}
 {% block title %}
-HotPot! - Login
+    HotPot! - Login
 {% endblock %}
-
 {% block head %}
-{% assets "login_css" %}
-<link rel="stylesheet" href="{{ASSET_URL}}"/>
-{% endassets %}
+    {% assets "login_css" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}"/>
+    {% endassets %}
 {% endblock %}
 {% block body %}
-<div class="col-md-4"></div>
-<div class="col-md-4">
-    <form class="form-signin" action="{{url_for('home.login')}}" method="POST">
-        <h2 class="page-header">Sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        {{form.email(type='text', id='inputEmail', class='form-control', placeholder='Username/Email Address',
-        required='', autofocus='')}}
-        <label for="inputPassword" class="sr-only">Password</label>
-        {{form.password(type='password', id='inputPassword', class='form-control', placeholder='Password',
-        required='')}}
-        <div class="checkbox">
-            <label>
-                {{form.remember_me(type='checkbox',value='remember-me')}} Remember me
-            </label>
+    <div class="container-full">
+
+        <div class="row">
+
+            <div class="col-lg-12 text-center v-center">
+                <h1><b><i>Hot Pot!</i></b></h1>
+                <form class="form-signin" action="{{ url_for('home.login') }}" method="POST">
+                    <p class="lead page-header"><i>Please Sign in!</i></p>
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    {{ form.email(type='text', id='inputEmail', class='form-control', placeholder='Username/Email Address',
+        required='', autofocus='') }}
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    {{ form.password(type='password', id='inputPassword', class='form-control', placeholder='Password',
+        required='') }}
+                    <div class="checkbox">
+                        <label>
+                            {{ form.remember_me(type='checkbox',value='remember-me') }} Remember me
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-default btn-block" type="submit">Sign in</button>
+                    <a href="{{ url_for('home.register') }}">Not a user? Register!</a>
+                    {{ form.csrf_token() }}
+                </form>
+            </div>
+
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <a href="{{url_for('home.register')}}">Not a user? Register!</a>
-        {{form.csrf_token()}}
-    </form>
-</div>
-<div class="col-md-4"></div>
-{% assets "login_js" %}
-<script type="text/javascript" src="{{ASSET_URL}}"></script>
-{% endassets %}
+        <!-- /row -->
+
+        <div class="row">
+
+            <div class="col-lg-12 text-center v-center" style="font-size:39pt;">
+                <a href="#"><i class="icon-google-plus"></i></a> <a href="#"><i class="icon-facebook"></i></a> <a
+                    href="#"><i class="icon-twitter"></i></a> <a href="#"><i class="icon-github"></i></a> <a href="#"><i
+                    class="icon-pinterest"></i></a>
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="container">
+
+            <hr>
+
+            <div class="row">
+                <div id="equal-height">
+                    <div class="col-md-6 ">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h3>Be a Cook!</h3></div>
+                            <div class="panel-body">
+                                Register and Post your dish! Let others know you are a good cook! Everyone can cook, and
+                                it should be so.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 eq-height">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h3>Let's eat!</h3></div>
+                            <div class="panel-body">
+                                Pick a posting, and enjoy dishes from all over places! You may discover the best cook
+                                alive somewhere!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- /container full -->
+
+
+    {% assets "login_js" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
 {% endblock %}

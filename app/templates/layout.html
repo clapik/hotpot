@@ -13,35 +13,29 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.js"></script>
-    <!--bootstrap G+-->
-    {#    <link rel="stylesheet" href="/static/css/lib/bootstrap.min.css"/>#}
-    {#    <link rel="stylesheet" href="/static/css/lib/styles.css"/>#}
-    {#    <script src="/static/js/lib/bootstrap.min.js"></script>#}
-    <!--bootstrap G+-->
-    {#    <link rel="stylesheet" href="/static/css/lib/sb-admin-2.css"/>#}
-    {#    <link rel="stylesheet" href="/static/css/lib/timeline.css"/>#}
-    {#    <script src="/static/js/lib/sb-admin-2.js"></script>#}
     {% block head %}{% endblock %}
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Hot Pot!</a>
+{% block navbar %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><b>Hot Pot!</b></a>
+            </div>
+            {% block navbar_right %}
+            {% endblock %}
+            <!--/.navbar-collapse -->
         </div>
-        {% block navbar_right %}
-        {% endblock %}
-        <!--/.navbar-collapse -->
-    </div>
-</nav>
+    </nav>
+{% endblock %}
 
 <div class="container">
     {% for message in get_flashed_messages() %}

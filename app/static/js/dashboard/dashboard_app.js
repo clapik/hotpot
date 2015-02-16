@@ -5,7 +5,8 @@ var app = angular.module('hotpot-dashboard',
     [
         'ngRoute',
         'dashboard_controller',
-        'postingsServices'
+        'postingsServices',
+        'appointmentsServices'
     ]);
 
 app.config(['$interpolateProvider', function ($interpolateProvider) {
@@ -22,6 +23,10 @@ app.config(['$routeProvider', function ($routeProvider) {
         when('/my_postings', {
             templateUrl: 'static/js/dashboard/partials/my_postings.html',
             controller: 'get_my_postings_controller'
+        }).
+        when('/appointments', {
+            templateUrl: 'static/js/dashboard/partials/appointments.html',
+            controller: 'get_appointments_controller'
         }).
         otherwise({
             redirectTo: '/'

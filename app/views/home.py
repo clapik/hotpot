@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, url_for, redirect, flash, session, g, abort, send_from_directory
 from ..api.auth_api import verify_token, verify_password, get_auth_token, login_required, user_required
 from ..api.user_api import register_new_user
-from ..api.posting_api import create_posting_helper
+from ..api.posting_api import create_posting_helper, edit_posting_helper
 from ..forms import LoginForm, RegisterForm, NewPostingForm
 import os
 
@@ -90,7 +90,12 @@ def create_posting(username):
     """
     form = NewPostingForm()
     if form.validate_on_submit():
-        posting = create_posting_helper(form.description.data)
+        json = {
+            'description': form.description.data,
+            'price': form.price.data,
+            'date': form.date.data
+        }
+        posting = create_posting_helper(json)
         flash('Posting created! Unique posting id: ' + str(posting.id))
         return redirect(url_for('home.home_page'))
     return render_template('home/create_posting.html', form=form, username=username)

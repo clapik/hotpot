@@ -1,43 +1,33 @@
 <div class="row"><span class="label label-default"
-                       style="font-size:large">Your postings:</span>
+                       style="font-size:large">Your Appointments:</span>
 </div>
-<div class="container-fluid row" style="padding-top:2%">
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-3"><b><i><u>Dish</u></i></b></div>
-        <div class="col-md-2"><b><i><u>Prepared By</u></i></b></div>
+<div class="container row" style="padding-top:2%">
+    <div class="col-md-8">
+        <table id="appointments-table"></table>
     </div>
-    <div class="row" ng-repeat="posting in postings.result">
-        <div class="col-md-1">
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="[['#myModal' + $index]]">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            </button>
-        </div>
-        <div class="col-md-3">[[posting.description]]</div>
-        <div class="col-md-2">[[posting.cook_username]]</div>
-
-        <div class="col-md-3"></div>
+    <div class="col-md-4"></div>
+    <div class="row" ng-repeat="appointment in appointments.result">
         <!-- Modal -->
         <div class="modal fade" id="[['myModal' + $index]]" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content" ng-controller="edit_posting_controller">
+                <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">[[posting.description]]</h4>
+                        <h4 class="modal-title">[[appointment.description]]</h4>
                     </div>
                     <div class="modal-body">
                         <label for="[['inputDescription'+ $index]]">Description</label>
                         <input type="text" id="[['inputDescription'+ $index]]" class="form-control"
-                               value="[[posting.description]]" required autofocus="">
+                               value="[[appointment.description]]" required autofocus disabled>
                         <label for="[['inputPrice'+ $index]]">Price ($)</label>
                         <input type="number" step="any" id="[['inputPrice'+ $index]]" class="form-control"
-                               value="[[posting.price]]" required=""/>
+                               value="[[appointment.price]]" required="" disabled/>
                         <label for="[['inputDate'+ $index]]">Date</label>
                         <input type="text" id="[['inputDate'+ $index]]" class="form-control date-picker"
-                               value="[[posting.date]]"
-                               required=""/>
+                               value="[[appointment.date]]"
+                               required disabled/>
                         <script>$(".date-picker").datepicker({
                             todayBtn: "linked",
                             calendarWeeks: true,
@@ -47,7 +37,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" ng-click="edit($index, posting.id)">Edit!</button>
+                        <button type="button" class="btn btn-primary">Cancel!</button>
                     </div>
                 </div>
             </div>

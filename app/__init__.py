@@ -30,11 +30,13 @@ from .views.home import home
 from .api.user_api import user_api
 from .api.auth_api import auth_api
 from .api.posting_api import posting_api
+from .api.appointment_api import appointment_api
 
 app.register_blueprint(home)
 app.register_blueprint(user_api, url_prefix='/api/user')
 app.register_blueprint(auth_api, url_prefix='/api/auth')
 app.register_blueprint(posting_api, url_prefix='/api/posting')
+app.register_blueprint(appointment_api, url_prefix='/api/appointment')
 
 # Register static assets
 from .util.assets import bundles

@@ -18,14 +18,26 @@
                         <h4 class="modal-title">[[posting.description]]</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Posting ID: [[posting.id]]</p>
-
-
-                        <p>Cook Name: [[posting.cook_username]]</p>
+                        <label for="[['inputDescription'+ $index]]">Description</label>
+                        <input type="text" id="[['inputDescription'+ $index]]" class="form-control"
+                               value="[[posting.description]]" required autofocus disabled>
+                        <label for="[['inputPrice'+ $index]]">Price ($)</label>
+                        <input type="number" step="any" id="[['inputPrice'+ $index]]" class="form-control"
+                               value="[[posting.price]]" required="" disabled/>
+                        <label for="[['inputDate'+ $index]]">Date</label>
+                        <input type="text" id="[['inputDate'+ $index]]" class="form-control date-picker"
+                               value="[[posting.date]]"
+                               required disabled />
+                        <script>$(".date-picker").datepicker({
+                            todayBtn: "linked",
+                            calendarWeeks: true,
+                            autoclose: true,
+                            todayHighlight: true
+                        });</script>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Make Appointment!</button>
+                        <button type="button" class="btn btn-primary">Reserve!</button>
                     </div>
                 </div>
             </div>
