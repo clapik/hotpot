@@ -6,7 +6,8 @@ from flask_bootstrap import Bootstrap
 from flask_cache import Cache
 from datetime import timedelta
 
-app = Flask(__name__, instance_relative_config=True)
+# app = Flask(__name__, instance_relative_config=True)
+app = Flask(__name__)
 
 # Load dev config (default)
 app.config.from_object('config.default')
