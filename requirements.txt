@@ -27,4 +27,4 @@ SQLAlchemy==0.9.8
 webassets==0.10.1
 Werkzeug==0.10.1
 WTForms==2.0.2
-gunircorn==19.2.1
+gunicorn==19.2.1
