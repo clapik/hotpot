@@ -16,9 +16,26 @@ postingsServices.factory('Postings_Edit', ['$resource', function ($resource) {
     });
 }]);
 
+
 var appointmentsServices = angular.module('appointmentsServices', ['ngResource']);
-postingsServices.factory('Appointments', ['$resource', function ($resource) {
+
+appointmentsServices.factory('Appointments_Get', ['$resource', function ($resource) {
     return $resource("/api/appointment/get_appointments", {}, {
+        get: {method: 'GET', cache: true},
+        save: {method: 'POST', cache: true}
+    });
+}]);
+
+appointmentsServices.factory('Appointments_Create', ['$resource', function ($resource) {
+    return $resource("/api/appointment/create", {}, {
+        get: {method: 'GET', cache: true},
+        save: {method: 'POST', cache: true}
+    });
+}]);
+
+
+appointmentsServices.factory('Appointments_Delete', ['$resource', function ($resource) {
+    return $resource("/api/appointment/delete", {}, {
         get: {method: 'GET', cache: true},
         save: {method: 'POST', cache: true}
     });

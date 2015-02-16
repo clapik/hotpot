@@ -25,8 +25,9 @@ dashboard_controller.controller('get_postings_controller', ['$scope', 'Postings'
 processPostings = function (postings) {
     var result = []
     $.each(postings, function (index, value) {
-        result.push([value.description, value.cook_username, "<button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" " +
-        "data-target=\"#myModal" + index + "\"><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span></button>"])
+        result.push([value.description, value.cook_username,
+            "<button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" " +
+            "data-target=\"#myModal" + index + "\"><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span></button>"])
     });
     return result;
 };
@@ -35,21 +36,17 @@ dashboard_controller.controller('get_my_postings_controller', ['$scope', 'Postin
     function ($scope, Postings) {
         Postings.save({username: window.username}, function (data) {
             $scope.postings = data
-        });
-    }
-]);
+            var postings = data.result
 
-dashboard_controller.controller('nav-sidebar_controller', ['$scope',
-    function ($scope) {
-        $scope.items = [
-            {name: "What's near you", url: "#/"},
-            {name: "Your Postings", url: "#/my_postings"},
-            {name: "Your Appointments", url: "#/appointments"}
-        ];
-        $scope.selectedIndex = -1
-        $scope.active_function = function ($index) {
-            $scope.selectedIndex = $index
-        };
+            var dataTable = $('#postings-table').DataTable({
+                'aaData': processPostings(postings),
+                'aoColumns': [
+                    {'sTitle': 'Description'},
+                    {'sTitle': 'Prepared by'},
+                    {'sTitle': ''}
+                ]
+            });
+        });
     }
 ]);
 
@@ -65,17 +62,31 @@ dashboard_controller.controller('edit_posting_controller', ['$scope', 'Postings_
                 date: $('#inputDate' + index).val()
             };
             Postings_Edit.save(json_data, function (data) {
-                console.log(data)
-            })
+                console.log(data);
+            });
         }
     }
 ]);
 
-dashboard_controller.controller('get_appointments_controller', ['$scope', 'Appointments',
-    function ($scope, Appointments) {
-        Appointments.get({}, function (data) {
-            $scope.appointments = data
-            var appointments = data.result
+dashboard_controller.controller('make_appointment_controller', ['$scope', 'Appointments_Create',
+    function ($scope, Appointments_Create) {
+        $scope.reserve = function (posting_id) {
+            var json_data = {
+                id: posting_id
+            };
+            Appointments_Create.save(json_data, function (data) {
+                console.log(data);
+            });
+
+        }
+    }
+]);
+
+dashboard_controller.controller('get_appointments_controller', ['$scope', 'Appointments_Get',
+    function ($scope, Appointments_Get) {
+        Appointments_Get.get({}, function (data) {
+            $scope.appointments = data;
+            var appointments = data.result;
 
             var dataTable = $('#appointments-table').DataTable({
                 'aaData': processAppointments(appointments),
@@ -103,3 +114,33 @@ processAppointments = function (appointments) {
     });
     return result;
 };
+
+dashboard_controller.controller('delete_appointments_controller', ['$scope', 'Appointments_Delete',
+    function ($scope, Appointments_Delete) {
+        $scope.delete_appointment = function (appointment_id) {
+            var json_data = {
+                id: appointment_id
+            };
+            console.log(json_data)
+            Appointments_Delete.save(json_data, function (data) {
+                console.log(data);
+                location.reload(true);
+            });
+
+        };
+    }
+]);
+
+dashboard_controller.controller('nav-sidebar_controller', ['$scope',
+    function ($scope) {
+        $scope.items = [
+            {name: "What's near you", url: "#/"},
+            {name: "Your Postings", url: "#/my_postings"},
+            {name: "Your Appointments", url: "#/appointments"}
+        ];
+        $scope.selectedIndex = -1
+        $scope.active_function = function ($index) {
+            $scope.selectedIndex = $index
+        };
+    }
+]);

@@ -11,7 +11,7 @@
         <div class="modal fade" id="[['myModal' + $index]]" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content" ng-controller="delete_appointments_controller">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
@@ -28,16 +28,20 @@
                         <input type="text" id="[['inputDate'+ $index]]" class="form-control date-picker"
                                value="[[appointment.date]]"
                                required disabled/>
-                        <script>$(".date-picker").datepicker({
+                        <script>$
+                        (".date-picker").datepicker({
                             todayBtn: "linked",
                             calendarWeeks: true,
                             autoclose: true,
                             todayHighlight: true
-                        });</script>
+                        });
+                        </script>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Cancel!</button>
+                        <button type="button" class="btn btn-primary"
+                                ng-click="delete_appointment(appointment.appointment_id)">Cancel!
+                        </button>
                     </div>
                 </div>
             </div>

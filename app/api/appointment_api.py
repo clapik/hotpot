@@ -1,5 +1,5 @@
 __author__ = 'toanngo'
-from flask import Blueprint, g, abort, jsonify, request
+from flask import Blueprint, g, abort, jsonify, request, flash
 from ..models import Appointment, Users, Posting
 from .. import db, cache
 from .auth_api import login_required, user_required
@@ -18,11 +18,15 @@ def create_appointment():
     appointment = create_appointment_helper(g.user, request.json['id'])
     if not appointment:
         abort(500)
-    return appointment, 201
+    return jsonify({
+        'appointment_id': appointment.id,
+        'posting_id': appointment.posting_id,
+        'customer_id': appointment.customer_id
+    }), 201
 
 
 def create_appointment_helper(user, posting_id):
-    posting = Posting.query.join(Users).add_columns(Users.username).first()
+    posting = Posting.query.join(Users).add_columns(Users.username).filter(Posting.id == posting_id).first()
     posting_owner = posting[1]
     if user.username == posting_owner:
         return None
@@ -74,17 +78,27 @@ def edit_appointment_helper(appointmentid, username):
     pass
 
 
-@appointment_api.route('/delete_appointment/<appointmentid>', methods=['POST'])
+@appointment_api.route('/delete', methods=['POST'])
 @login_required
-def delete_appointment(appointmentid):
-    # TODO
-    pass
+def delete_appointment():
+    customer_id = Appointment.query.filter_by(id=request.json['id']).first().customer_id
+    customer = Users.query.filter_by(id=customer_id).first()
+    appointment = delete_appointment_helper(request.json['id'], username=customer.username)
+    if not appointment:
+        abort(500)
+    return jsonify({
+        'appointment_id': appointment.id,
+        'posting_id': appointment.posting_id,
+        'customer_id': appointment.customer_id
+    }), 201
 
 
 @user_required
-def delete_appointment_helper(appointmentid, username):
-    # TODO
-    pass
+def delete_appointment_helper(appointment_id, username):
+    appointment = Appointment.query.filter_by(id=appointment_id).first()
+    db.session.delete(appointment)
+    db.session.commit()
+    return appointment
 
 
 @cache.memoize(timeout=60)

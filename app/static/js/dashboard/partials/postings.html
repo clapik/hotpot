@@ -11,7 +11,7 @@
         <div class="modal fade" id="[['myModal' + $index]]" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content" ng-controller="make_appointment_controller">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Reserve!</button>
+                        <button type="button" class="btn btn-primary" ng-click="reserve(posting.id)">Reserve!</button>
                     </div>
                 </div>
             </div>
