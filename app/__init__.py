@@ -5,6 +5,7 @@ from flask.ext.assets import Environment
 from flask_bootstrap import Bootstrap
 from flask_cache import Cache
 from datetime import timedelta
+import os
 
 # app = Flask(__name__, instance_relative_config=True)
 app = Flask(__name__)
@@ -17,7 +18,7 @@ app.config.from_object('config.default')
 
 # Load file specified by APP_CONFIG
 app.config.from_envvar('APP_CONFIG')
-app.config.from_envvar('SECRET_KEY')
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
 
 # Register db
 db = SQLAlchemy(app)
