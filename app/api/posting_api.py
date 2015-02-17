@@ -132,7 +132,7 @@ def delete_posting(posting_id):
     :return:
     """
     # get the owner of the posting
-    username = Posting.query.join(Users).add_columns(Users.username).first()[1]
+    username = Posting.query.join(Users).add_columns(Users.username).filter_by(id=posting_id).first()[1]
     posting = delete_posting_helper_wrapper(posting_id, username=username)
     if not posting:
         abort(500)
