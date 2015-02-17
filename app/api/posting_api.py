@@ -77,7 +77,7 @@ def edit_posting():
     :return:
     """
     # get the owner of the posting
-    username = Posting.query.join(Users).add_columns(Users.username).first()[1]
+    username = Posting.query.join(Users).add_columns(Users.username).filter_by(id=request.json['id']).first()[1]
     new_posting = request.json
     posting = edit_posting_helper_auth(new_posting, username=username)
     if not posting:
